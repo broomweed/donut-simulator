@@ -36,8 +36,20 @@ No!!
 
 *Creatures who are especially good at tree-eating pull ahead of the rest.*
 
-![When will they learn that clear-cutting isn't a long-term viable strategy? Oh wait, they're all dead. I guess they won't.](images/dent.png)
+![what kind of name is "ooyn-ihub"](images/vying.png)
+
+*At the peak of the creature population, many different species will start vying for control.*
+
+![When will they learn that clear-cutting isn't a long-term viable strategy?](images/dentbetter.png)
 
 *The creatures make a big dent in the tree population, but that kind of growth isn't sustainable.*
 
-Sometimes, a species will learn to live in harmony with nature, and survive the boom-and-bust cycle. I recommend leaving this running for a long time and then coming back to it later if you want to see more interesting stuff happen.
+![Well, they're all dead. I guess they'll never learn their lesson.](images/sordid_history.png)
+
+*Looks like they didn't survive the ensuing fallout from their greed. Oh well.*
+
+![They live among the trees.](images/ihub.png)
+
+*Sometimes, a species will learn to live in harmony with nature, and survive the boom-and-bust cycle. Although often some other creatures will eat all the trees and they'll die anyway. I'm not sure how to fix this problem?*
+
+Since this thing is highly dependent on random chance, I recommend leaving this running for a long time and then coming back to it later if you want to see more interesting stuff happen.
