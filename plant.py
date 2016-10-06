@@ -14,9 +14,9 @@ class Plant (Organism):
         Organism.__init__(self, inputs, outputs, parent, None)
         if parent is None:
             self.color = (random.uniform(-1.0, 1.0), random.uniform(-1.0, 1.0), random.uniform(-1.0, 1.0))
-            self.seed_dist = random.uniform(8, 32)
+            self.seed_dist = random.uniform(4, 12)
             self.energy = 1
-            self.params['dist_radius'] = random.uniform (8, 16)
+            self.params['dist_radius'] = random.uniform (4, 8)
             self.species = ""
             for i in range(random.randint(1, 3)):
                 self.species += gen_syl()
