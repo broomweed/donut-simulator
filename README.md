@@ -12,7 +12,7 @@ The world that these organisms inhabit wraps at the edges. This means that their
 
 #### What do I need to experience this simulationy goodness?
 
-You'll need **Python 3**, as well as the **pygame** library. I think that's it?
+You'll need **Python 3**, as well as the **pygame** library for displaying graphics and the **noise** library for generating the terrain. I think that's it?
 
 #### Is it finished?
 
