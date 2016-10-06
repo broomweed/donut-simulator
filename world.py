@@ -433,7 +433,7 @@ def update(creatures, altitude, world, worldstate):
 
     if time % 10 == 0:
         pop_history.append((population, plant_population / 4))
-        if len(pop_history) > panel_width:
+        if len(pop_history) > panel_width + world_w * draw_scale:
             pop_history.pop(0)
 
     if population == 0 or spawn_timer > log2(population)/log2(6) * 40:
@@ -539,7 +539,7 @@ def draw(win, landscape, world, altitude, creatures, plants):
     if highlight_tile:
         pygame.draw.rect(win, (0, 0, 0), ((highlight_tile[0]*draw_scale, highlight_tile[1]*draw_scale), (draw_scale, draw_scale)), 1)
 
-    if selected_creature:
+    if selected_creature and not selected_creature.is_plant:
         look_pos = selected_creature.real_look_pos
         #look_pos = (round(selected_creature.x + selected_creature.indist * cos(selected_creature.realdir)), round(selected_creature.y + selected_creature.indist * sin(selected_creature.realdir)))
         pygame.draw.circle(win, (0, 255, 255), (round(look_pos[0]*draw_scale), round(look_pos[1]*draw_scale)), 4, 1)
@@ -849,30 +849,8 @@ def draw(win, landscape, world, altitude, creatures, plants):
 
             bottom_lines.append("other: %.1f%%" % ((1 - (species_total / population)) * 100))
 
-            pop_history_max = 30
-            if len(pop_history) > 0:
-                creature_pop_max = max([x[0] for x in pop_history])
-                plant_pop_max = max([x[1] for x in pop_history]) # scaling different
-                pop_history_max = max(creature_pop_max, plant_pop_max, 30)
+            draw_pop_graph(win, panel_width)
 
-            #if pop_history_max == 0:
-                #pop_history_max = 1 # no divide by zero
-
-            graph_height = 200
-            for i in range(len(pop_history), 0, -1):
-                if pop_history[-i][0] > pop_history[-i][1]:
-                    win.fill((255, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][0] / pop_history_max) * graph_height),
-                                (1, (pop_history[-i][0] - pop_history[-i][1]) / pop_history_max * graph_height + 1)))
-                    win.fill((40, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][1] / pop_history_max) * graph_height),
-                                (1, pop_history[-i][1] / pop_history_max * graph_height + 1)))
-                elif pop_history[-i][0] < pop_history[-i][1]:
-                    win.fill((40, 200, 60), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][1] / pop_history_max) * graph_height),
-                                (1, (pop_history[-i][1] - pop_history[-i][0]) / pop_history_max * graph_height + 1)))
-                    win.fill((40, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][0] / pop_history_max) * graph_height),
-                                (1, pop_history[-i][0] / pop_history_max * graph_height + 1)))
-                else: # equal
-                    win.fill((40, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][0] / pop_history_max) * graph_height),
-                                (1, pop_history[-i][0] / pop_history_max * graph_height + 1)))
 
     label = bigfont.render(labeltext, 0, (255, 255, 255))
 
@@ -1007,8 +985,33 @@ def ffdraw(win):
     text2 = smallfont.render("Click to exit fast forward.", 0, (255,255,255))
     win.blit(text, (10, 10))
     win.blit(text2, (10, 50))
+    draw_pop_graph(win, draw_scale * world_w + panel_width)
     if time % 10 == 0:
         pygame.display.flip()
+
+def draw_pop_graph(win, width):
+    recent_history = pop_history[-width:]
+    recent_history_max = 30
+    if len(recent_history) > 0:
+        creature_pop_max = max([x[0] for x in recent_history])
+        plant_pop_max = max([x[1] for x in recent_history]) # scaling different
+        recent_history_max = max(creature_pop_max, plant_pop_max, 30)
+
+    graph_height = 200
+    for i in range(len(recent_history), 0, -1):
+        if recent_history[-i][0] > recent_history[-i][1]:
+            win.fill((255, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (recent_history[-i][0] / recent_history_max) * graph_height),
+                        (1, (recent_history[-i][0] - recent_history[-i][1]) / recent_history_max * graph_height + 1)))
+            win.fill((40, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (recent_history[-i][1] / recent_history_max) * graph_height),
+                        (1, recent_history[-i][1] / recent_history_max * graph_height + 1)))
+        elif recent_history[-i][0] < recent_history[-i][1]:
+            win.fill((40, 200, 60), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (recent_history[-i][1] / recent_history_max) * graph_height),
+                        (1, (recent_history[-i][1] - recent_history[-i][0]) / recent_history_max * graph_height + 1)))
+            win.fill((40, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (recent_history[-i][0] / recent_history_max) * graph_height),
+                        (1, recent_history[-i][0] / recent_history_max * graph_height + 1)))
+        else: # equal
+            win.fill((40, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (recent_history[-i][0] / recent_history_max) * graph_height),
+                        (1, recent_history[-i][0] / recent_history_max * graph_height + 1)))
 
 clock = pygame.time.Clock()
 done = False
