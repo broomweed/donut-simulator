@@ -989,10 +989,9 @@ def select_line(pos):
         if right - smallfont.size(" " * 45)[0] < pos[0] and pos[0] < right - smallfont.size(" " * 32)[0]:
             brain_sel_inp = True
 
-def select_square(pos):
+def select_creature_by_pos(pos):
     global selected_creature
-    cr = get_creature(pos)
-    selected_creature = cr
+    selected_creature = point_in_creature(pos)
 
 def log(msg):
     global log_msgs
@@ -1077,7 +1076,7 @@ if __name__ == "__main__":
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if not fast_forward:
                     if pygame.mouse.get_pos()[0] < draw_scale * world_w:
-                        select_square((pygame.mouse.get_pos()[0] // draw_scale, pygame.mouse.get_pos()[1] // draw_scale))
+                        select_creature_by_pos((pygame.mouse.get_pos()[0] / draw_scale, pygame.mouse.get_pos()[1] / draw_scale))
                         current_history_entry = None
                         current_page = None
                     elif tsel_line is not None:
