@@ -527,7 +527,7 @@ def point_within_radius_of_creature(point, radius):
     return None
 
 #@profile
-def draw(win, world, altitude, creatures, plants):
+def draw(win, landscape, world, altitude, creatures, plants):
     global selected_creature, bsel_line, click_callback, click_callback_arg, top_creatures, new_history_entry
     win.fill((0, 0, 0))
     mouse_pos = pygame.mouse.get_pos()
@@ -535,15 +535,9 @@ def draw(win, world, altitude, creatures, plants):
         highlight_tile = (mouse_pos[0] // draw_scale, mouse_pos[1] // draw_scale)
     else:
         highlight_tile = None
-    for y in range(len(world)):
-       for x in range(len(world[y])):
-            cr = get_creature((x, y))
-            color = calculate_tile_color(x, y)
-            rightcolor = (max(0, min(255, 255 * color[0])),max(0, min(255, 255 * color[1])),max(0, min(255, 255 * color[2])))
-
-            win.fill(rightcolor, ((x*draw_scale, y*draw_scale), (draw_scale, draw_scale)))
-            if highlight_tile and x == highlight_tile[0] and y == highlight_tile[1]:
-                pygame.draw.rect(win, (0, 0, 0), ((x*draw_scale, y*draw_scale), (draw_scale, draw_scale)), 1)
+    win.blit(landscape, (0, 0))
+    if highlight_tile:
+        pygame.draw.rect(win, (0, 0, 0), ((highlight_tile[0]*draw_scale, highlight_tile[1]*draw_scale), (draw_scale, draw_scale)), 1)
 
     if selected_creature:
         look_pos = selected_creature.real_look_pos
@@ -1037,6 +1031,15 @@ if __name__ == "__main__":
     smallfont = pygame.font.SysFont("monospace", 15, bold=True)
     charwidth, lineheight = smallfont.size("hello")
 
+    # draw landscape only once, to run faster
+    landscape = pygame.Surface((world_w * draw_scale, world_h * draw_scale))
+    for y in range(len(world)):
+        for x in range(len(world[y])):
+            color = calculate_tile_color(x, y)
+            rightcolor = (max(0, min(255, 255 * color[0])),max(0, min(255, 255 * color[1])),max(0, min(255, 255 * color[2])))
+
+            landscape.fill(rightcolor, ((x*draw_scale, y*draw_scale), (draw_scale, draw_scale)))
+
     while not done:
         if not fast_forward:
             clock.tick(60)
@@ -1052,7 +1055,7 @@ if __name__ == "__main__":
         creatures = [c for c in creatures if c.extant]
         population = len([c for c in creatures if c.alive])
         if not fast_forward:
-            draw(win, worldstate, altitude, creatures, plants)
+            draw(win, landscape, worldstate, altitude, creatures, plants)
         else:
             ffdraw(win)
         for event in pygame.event.get():
