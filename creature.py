@@ -123,8 +123,10 @@ class Creature (Organism):
         else:
             self.name = self.realname
 
-        self.x = self.tile_x = x
-        self.y = self.tile_y = y
+        self.tile_x = x
+        self.tile_y = y
+        self.x = x
+        self.y = y
         self.id = id
         self.alive = True
         self.age = 0

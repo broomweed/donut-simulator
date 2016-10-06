@@ -566,7 +566,7 @@ def draw(win, landscape, world, altitude, creatures, plants):
         #rightcolor = (max(0, min(255, 255 * c.color[0])),max(0, min(255, 255 * c.color[1])),max(0, min(255, 255 * c.color[2])))
         rightcolor = (255 * sigmoid(c.color[0]), 255 * sigmoid(c.color[1]), 255 * sigmoid(c.color[2]))
         #pygame.draw.circle(win, rightcolor, (draw_scale*(c.tile_x) + draw_scale//2, draw_scale*(c.tile_y) + draw_scale//2), draw_scale//2)
-        pygame.draw.circle(win, rightcolor, (round(draw_scale*(c.x)) + draw_scale//2, round(draw_scale*(c.y)) + draw_scale//2), draw_scale//2)
+        pygame.draw.circle(win, rightcolor, (round(draw_scale*(c.x)), round(draw_scale*(c.y))), draw_scale//2)
 
         #pygame.draw.circle(win, outlinecolor, (draw_scale*(c.tile_x) + draw_scale//2, draw_scale*(c.tile_y) + draw_scale//2), draw_scale//2, 1)
         if selected_creature and c.id == selected_creature.id:
@@ -580,7 +580,7 @@ def draw(win, landscape, world, altitude, creatures, plants):
             else:
                 outlinecolor = (255, 0, 0)
 
-        pygame.draw.circle(win, outlinecolor, (round(draw_scale*(c.x)) + draw_scale//2, round(draw_scale*(c.y)) + draw_scale//2), draw_scale//2, 1)
+        pygame.draw.circle(win, outlinecolor, (round(draw_scale*(c.x)), round(draw_scale*(c.y))), draw_scale//2, 1)
         #if c.dir == 0:
             #eye_pos = (draw_scale * c.tile_x + draw_scale//2, draw_scale * c.tile_y + draw_scale//4)
         #    eye_pos = (draw_scale * c.x + draw_scale//2, draw_scale * c.y + draw_scale//4)
@@ -595,7 +595,7 @@ def draw(win, landscape, world, altitude, creatures, plants):
         #    eye_pos = (draw_scale * c.x + draw_scale//4, draw_scale * c.y + draw_scale//2)
         #else:
         #    log("unknown dir %d" % c.dir)
-        eye_pos = (draw_scale * c.x + cos(c.realdir) * draw_scale // 4 + draw_scale // 2, draw_scale * c.y + sin(c.realdir) * draw_scale // 4 + draw_scale // 2)
+        eye_pos = (draw_scale * c.x + cos(c.realdir) * draw_scale // 4, draw_scale * c.y + sin(c.realdir) * draw_scale // 4)
 
         eye_pos = (round(eye_pos[0]), round(eye_pos[1]))
 

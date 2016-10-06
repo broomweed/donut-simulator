@@ -48,7 +48,7 @@ class Plant (Organism):
     def do(self, data):
         self.seed = data[0]
         self.release = data[1]
-        self.color = (data[2], data[3], data[4])
+        self.color = (sigmoid(data[2]) * 2 - 1, sigmoid(data[3]) * 2 - 1, sigmoid(data[4]) * 2 - 1)
 
 def gen_syl():
     syl = "A"
