@@ -137,7 +137,7 @@ def update(creatures, altitude, world, worldstate):
         v_angle_correction = sigmoid(creature.lookangle) * pi/4
         d = 0
         while d < sigmoid(creature.lookdist) * MAX_LOOK_DISTANCE:
-            d += 0.2
+            d += 0.1
             #pos = (round(creature.tile_x + cos(creature.realdir + v_angle_correction) * i), round(creature.tile_y + sin(creature.realdir + v_angle_correction) * i))
             #look_pos = (round(pos[0] % world_w), round(pos[1] % world_h))
             #neighbors = (get_creatures((look_pos)) or []) + (get_plants((look_pos)) or [])
@@ -432,7 +432,7 @@ def update(creatures, altitude, world, worldstate):
                     (best_creature.name, best_creature.energy, best_creature.hp * 100, float(best_creature.age)/100, sigmoid(best_creature.params['meat%']) * 100, best_creature.birth))
 
     if time % 10 == 0:
-        pop_history.append((population, plant_population / 8))
+        pop_history.append((population, plant_population / 4))
         if len(pop_history) > panel_width:
             pop_history.pop(0)
 
@@ -862,17 +862,17 @@ def draw(win, landscape, world, altitude, creatures, plants):
             for i in range(len(pop_history), 0, -1):
                 if pop_history[-i][0] > pop_history[-i][1]:
                     win.fill((255, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][0] / pop_history_max) * graph_height),
-                                (1, (pop_history[-i][0] - pop_history[-i][1]) / pop_history_max * graph_height)))
+                                (1, (pop_history[-i][0] - pop_history[-i][1]) / pop_history_max * graph_height + 1)))
                     win.fill((40, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][1] / pop_history_max) * graph_height),
-                                (1, pop_history[-i][1] / pop_history_max * graph_height)))
+                                (1, pop_history[-i][1] / pop_history_max * graph_height + 1)))
                 elif pop_history[-i][0] < pop_history[-i][1]:
                     win.fill((40, 200, 60), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][1] / pop_history_max) * graph_height),
-                                (1, (pop_history[-i][1] - pop_history[-i][0]) / pop_history_max * graph_height)))
+                                (1, (pop_history[-i][1] - pop_history[-i][0]) / pop_history_max * graph_height + 1)))
                     win.fill((40, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][0] / pop_history_max) * graph_height),
-                                (1, pop_history[-i][0] / pop_history_max * graph_height)))
+                                (1, pop_history[-i][0] / pop_history_max * graph_height + 1)))
                 else: # equal
                     win.fill((40, 60, 40), ((draw_scale * world_w + panel_width - i, draw_scale * world_h - (pop_history[-i][0] / pop_history_max) * graph_height),
-                                (1, pop_history[-i][0] / pop_history_max * graph_height)))
+                                (1, pop_history[-i][0] / pop_history_max * graph_height + 1)))
 
     label = bigfont.render(labeltext, 0, (255, 255, 255))
 
