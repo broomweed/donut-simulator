@@ -50,6 +50,14 @@ No!!
 
 ![They live among the trees.](images/ihub.png)
 
-*Sometimes, a species will learn to live in harmony with nature, and survive the boom-and-bust cycle. Although often some other creatures will eat all the trees and they'll die anyway. I'm not sure how to fix this problem?*
+*Sometimes, a species will learn to live in harmony with nature, and survive the boom-and-bust cycle.*
+
+![I'm so proud of them.](images/stableish.png)
+
+*If they manage to reach a stable equilibrium, you get to see some cool population dynamics.*
+
+![The green trees' species is named "sir." That's pretty awesome.](images/region.png)
+
+*Often you get to see regional variation, which is pretty interesting as well.*
 
 Since this thing is highly dependent on random chance, I recommend leaving this running for a long time and then coming back to it later if you want to see more interesting stuff happen.
