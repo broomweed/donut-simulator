@@ -975,7 +975,7 @@ def select_line(pos):
 def select_creature_by_pos(pos):
     global selected_creature
     creature = point_in_creature(pos)
-    if not creature.is_plant:
+    if creature is not None and not creature.is_plant:
         selected_creature = creature
 
 def log(msg):
