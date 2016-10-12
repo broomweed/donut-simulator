@@ -1024,7 +1024,7 @@ paused = False
 #@profile
 def main():
     # oh god this didn't used to be a function, didn't realize how much global state I had
-    global altitude, grass, plants, world, worldstate, landscape, creatures, population,\
+    global altitude, grass, plants, plant_population, world, worldstate, landscape, creatures, population,\
         current_page, current_history_entry, selected_creature, paused, done, fast_forward,\
         bsel_line, tsel_line, brain_sel_inp, brain_sel_int, brain_sel_out, bigfont, smallfont,\
         lineheight, charwidth
