@@ -65,7 +65,7 @@ log_msgs = []
 
 def init_plants():
     plant_population = 0
-    create_plants(5)
+    create_plants(INITIAL_PLANT_NUMBER)
 
 def init_creatures():
     global population, next_creature_id, creature_positions
@@ -561,6 +561,10 @@ def draw(win, landscape, world, altitude, creatures, plants):
         #if c.alive:
         #    rightcolor = (max(0, min(255, 255 * color[0])),max(0, min(255, 255 * color[1])),max(0, min(255, 255 * color[2])))
         #    pygame.draw.circle(win, rightcolor, (round(draw_scale*c.x) + draw_scale//2, round(draw_scale*c.y) + draw_scale//2), draw_scale//2 + 2)
+        if c.alive and c.fight > 0.5:
+            color = (c.fight * 2 - 1, 0, 0)
+            rightcolor = (max(0, min(255, 255 * color[0])),max(0, min(255, 255 * color[1])),max(0, min(255, 255 * color[2])))
+            pygame.draw.circle(win, rightcolor, (round(draw_scale*c.x), round(draw_scale*c.y)), draw_scale//2 + 1)
 
         #rightcolor = (max(0, min(255, 128 * c.color[0] + 128)),max(0, min(255, 128 * c.color[1] + 128)),max(0, min(255, 128 * c.color[2] + 128)))
         #rightcolor = (max(0, min(255, 255 * c.color[0])),max(0, min(255, 255 * c.color[1])),max(0, min(255, 255 * c.color[2])))
@@ -1017,7 +1021,13 @@ clock = pygame.time.Clock()
 done = False
 paused = False
 
-if __name__ == "__main__":
+@profile
+def main():
+    # oh god this didn't used to be a function, didn't realize how much global state I had
+    global altitude, grass, plants, world, worldstate, landscape, creatures, population,\
+        current_page, current_history_entry, selected_creature, paused, done, fast_forward,\
+        bsel_line, tsel_line, brain_sel_inp, brain_sel_int, brain_sel_out, bigfont, smallfont,\
+        lineheight, charwidth
     altitude, grass = init_world() # actual altitude values for world
     #world = [[z if z > 0 else z for z in x] for x in world]
     plants = []
@@ -1098,3 +1108,7 @@ if __name__ == "__main__":
                     brain_sel_inp = False
 
     pygame.quit()
+
+if __name__ == "__main__":
+    main()
+
