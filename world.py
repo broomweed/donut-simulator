@@ -137,7 +137,6 @@ def update(creatures, altitude, world, worldstate):
         v_angle_correction = sigmoid(creature.lookangle) * pi/4
         d = 0
         while d < sigmoid(creature.lookdist) * MAX_LOOK_DISTANCE:
-            d += 0.1
             #pos = (round(creature.tile_x + cos(creature.realdir + v_angle_correction) * i), round(creature.tile_y + sin(creature.realdir + v_angle_correction) * i))
             #look_pos = (round(pos[0] % world_w), round(pos[1] % world_h))
             #neighbors = (get_creatures((look_pos)) or []) + (get_plants((look_pos)) or [])
@@ -147,12 +146,13 @@ def update(creatures, altitude, world, worldstate):
                 #icolor = neighbor.color
                 #break
             target = point_in_creature((creature.x + cos(creature.realdir + v_angle_correction) * d, creature.y + sin(creature.realdir + v_angle_correction) * d))
-            if target is not None:
+            if target is not None and target is not creature:
                 vdist = d
-                pos = (creature.x + cos(creature.realdir) * d, creature.y + sin(creature.realdir) * d)
+                pos = (creature.x + cos(creature.realdir + v_angle_correction) * d, creature.y + sin(creature.realdir + v_angle_correction) * d)
                 creature.real_look_pos = pos
                 icolor = target.color
                 break
+            d += 0.33
         else:
             #creature.real_look_pos = (round(creature.look_pos()[0] % world_w), round(creature.look_pos()[1] % world_h))
             vdist = round(sigmoid(creature.lookdist) * MAX_LOOK_DISTANCE)
@@ -1021,7 +1021,7 @@ clock = pygame.time.Clock()
 done = False
 paused = False
 
-@profile
+#@profile
 def main():
     # oh god this didn't used to be a function, didn't realize how much global state I had
     global altitude, grass, plants, world, worldstate, landscape, creatures, population,\
