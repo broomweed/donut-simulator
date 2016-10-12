@@ -34,6 +34,7 @@ MAX_LOOK_DISTANCE = 10      # maximum distance ahead of themselves creatures can
 # FIGHTING
 FIGHT_COST = 10             # cost for max fightingness
 FIGHT_RATIO = 0.6           # % of target's HP depleted at maximum fightingness
+FIGHT_DISTANCE = 0.5        # distance between creatures to execute successful FIGHT move
 
 # EATING
 EAT_COST = 0.1              # energy used per unit of tree attempted to eat

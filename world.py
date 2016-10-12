@@ -313,10 +313,11 @@ def update(creatures, altitude, world, worldstate):
                 creature.energy += eaten * EAT_RATIO
                 if target.energy < 0:
                     target.alive = False
-        
+
         if creature.fight > 0:
             fightAmt = sigmoid(creature.fight) * 2 - 1
-            if neighbor is not None and neighbor.alive:
+            neighbor = point_in_creature((creature.x + cos(creature.realdir) * (FIGHT_DISTANCE + 1), creature.y + sin(creature.realdir) * (FIGHT_DISTANCE + 1)))
+            if neighbor is not None and not neighbor.is_plant and neighbor.alive:
                 creature.energy -= fightAmt * FIGHT_COST # cost: 0 ~ 1/5 fight
                 damage = fightAmt * FIGHT_RATIO * neighbor.hp # proportional to target's HP
                 neighbor.hp -= damage
@@ -973,7 +974,9 @@ def select_line(pos):
 
 def select_creature_by_pos(pos):
     global selected_creature
-    selected_creature = point_in_creature(pos)
+    creature = point_in_creature(pos)
+    if not creature.is_plant:
+        selected_creature = creature
 
 def log(msg):
     global log_msgs
