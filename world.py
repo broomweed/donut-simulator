@@ -191,7 +191,8 @@ def update(creatures, altitude, world, worldstate):
         creature.bump = 0 # whether or not they're being restricted in movement b/c someone's there
 
         if creature.hp < 1:
-            creature.hp += sigmoid(creature.energy - MIN_CREATURE_ENERGY - HP_HALF_E_LEVEL) * 0.2 # recover HP
+            creature.hp += sigmoid(creature.energy - MIN_CREATURE_ENERGY - HP_HALF_E_LEVEL) * HP_RECOVER_SPEED # recover HP
+            #print("recover", creature.hp)
         creature.hp = max(0, min(1, creature.hp))
 
         turnamt = sigmoid(creature.turn/8) * 2 - 1
@@ -321,6 +322,7 @@ def update(creatures, altitude, world, worldstate):
                 creature.energy -= fightAmt * FIGHT_COST # cost: 0 ~ 1/5 fight
                 damage = fightAmt * FIGHT_RATIO * neighbor.hp # proportional to target's HP
                 neighbor.hp -= damage
+                #print(neighbor.hp)
                 neighbor.pain += fightAmt * 2
                 neighbor.hp = max(0, neighbor.hp)
                 if neighbor.hp == 0:
@@ -562,8 +564,8 @@ def draw(win, landscape, world, altitude, creatures, plants):
         #if c.alive:
         #    rightcolor = (max(0, min(255, 255 * color[0])),max(0, min(255, 255 * color[1])),max(0, min(255, 255 * color[2])))
         #    pygame.draw.circle(win, rightcolor, (round(draw_scale*c.x) + draw_scale//2, round(draw_scale*c.y) + draw_scale//2), draw_scale//2 + 2)
-        if c.alive and c.fight > 0.5:
-            color = (c.fight * 2 - 1, 0, 0)
+        if c.alive and c.fight > 0:
+            color = (sigmoid(c.fight) * 2 - 1, 0, 0)
             rightcolor = (max(0, min(255, 255 * color[0])),max(0, min(255, 255 * color[1])),max(0, min(255, 255 * color[2])))
             pygame.draw.circle(win, rightcolor, (round(draw_scale*c.x), round(draw_scale*c.y)), draw_scale//2 + 1)
 

@@ -6,6 +6,7 @@ MIN_CREATURE_ENERGY = 0.1   # energy level below which a creature dies
 HP_HALF_E_LEVEL = 3         # energy level which gives 50% of max possible HP recovery
 MAX_NATURAL_CORPSE_AGE = 40 # frames a corpse stays around after dying of starvation
 MAX_CORPSE_AGE = 130        # frames a corpse stays around after being MURDERED
+HP_RECOVER_SPEED = 0.1      # relative hp recovery speed
 
 # LIVING
 BE_ALIVE_RATIO_COST = 0.001 # as a fraction of total E
@@ -33,8 +34,8 @@ MAX_LOOK_DISTANCE = 10      # maximum distance ahead of themselves creatures can
 
 # FIGHTING
 FIGHT_COST = 10             # cost for max fightingness
-FIGHT_RATIO = 0.6           # % of target's HP depleted at maximum fightingness
-FIGHT_DISTANCE = 0.5        # distance between creatures to execute successful FIGHT move
+FIGHT_RATIO = 0.9           # % of target's HP depleted at maximum fightingness
+FIGHT_DISTANCE = 1.0        # distance between creatures to execute successful FIGHT move
 
 # EATING
 EAT_COST = 0.1              # energy used per unit of tree attempted to eat
