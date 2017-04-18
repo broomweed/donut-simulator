@@ -403,7 +403,8 @@ def update(creatures, altitude, world, worldstate):
         if plant.energy < 0:
             plant.energy = 0
             plant.alive = False
-        if plant.energy > PLANT_REPRODUCTIVE_THRESHOLD * ((log2(plant_population) or 1) / log2(6)) and plant.release > 0:
+        #if plant.energy > PLANT_REPRODUCTIVE_THRESHOLD * ((log2(plant_population) or 1) / log2(6)) and plant.release > -(log2(6) / (log2(plant_population) or 1)):
+        if plant.energy > PLANT_REPRODUCTIVE_THRESHOLD * (plant_population ** 1.15) and plant.release > 0:
             if plant_population < MAX_PLANTS:
                 seed_angle = random.uniform(-pi, pi)
                 x = (plant.pos[0] + cos(seed_angle) * plant.seed_dist) % world_w
@@ -412,8 +413,9 @@ def update(creatures, altitude, world, worldstate):
                 if not point_within_radius_of_creature((x, y), plant.params['dist_radius']):
                     plant_child = Plant(x, y, parent=plant)
                     register_plant(plant_child)
+                    plant.energy -= (PLANT_REPRODUCTIVE_THRESHOLD * (plant_population ** 1.15)) * 0.3
                 else:
-                    plant.energy -= PLANT_REPRODUCTIVE_THRESHOLD / 4    # crowding penalty
+                    plant.energy -= (PLANT_REPRODUCTIVE_THRESHOLD * (plant_population ** 1.15)) * 0.5    # crowding penalty
 
 
     if plant_population == 0:
